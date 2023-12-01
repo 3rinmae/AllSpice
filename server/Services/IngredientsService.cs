@@ -1,5 +1,6 @@
 
 
+
 namespace AllSpice.Services;
 
 public class IngredientsService
@@ -15,6 +16,27 @@ public class IngredientsService
   {
     Ingredient ingredient = _repository.CreateIngredient(ingredientData);
     return ingredient;
+  }
+
+  internal Ingredient GetIngredientById(int ingredientId)
+  {
+    Ingredient ingredient = _repository.GetIngredientById(ingredientId);
+    if (ingredient == null)
+    {
+      throw new Exception($"Invalid id: {ingredientId}");
+    }
+    return ingredient;
+  }
+
+  internal string DestroyIngredient(int ingredientId, string userId)
+  {
+    Ingredient ingredient = GetIngredientById(ingredientId);
+    if (ingredient.CreatorId != userId)
+    {
+      throw new Exception("This is not your ingredient to delete");
+    }
+    _repository.DestroyIngredient(ingredientId);
+    return $"{ingredient.Name} has been deleted!";
   }
 
   internal List<Ingredient> GetIngredientsByRecipeId(int recipeId)
