@@ -18,10 +18,35 @@ CREATE TABLE
         img VARCHAR(500) NOT NULL,
         category VARCHAR(255) NOT NULL,
         creatorId VARCHAR(255) NOT NULL,
-        Foreign Key (creatorId) REFERENCES accounts(id)
+        Foreign Key (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
 
 DROP Table recipes
+
+CREATE TABLE
+    IF NOT EXISTS ingredients(
+        id INT NOT NULL primary key AUTO_INCREMENT,
+        createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        name VARCHAR(255) NOT NULL,
+        quantity VARCHAR(255) NOT NULL,
+        recipeId INT NOT NULL,
+        creatorId VARCHAR(255) NOT NULL,
+        Foreign Key (recipeId) REFERENCES recipes(id) ON DELETE CASCADE,
+        Foreign Key (creatorId) REFERENCES accounts (id) ON DELETE CASCADE
+    ) default charset utf8 COMMENT '';
+
+CREATE TABLE
+    IF NOT EXISTS favorites(
+        id INT NOT NULL primary key AUTO_INCREMENT,
+        createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        accountId VARCHAR(255) NOT NULL,
+        recipeId INT NOT NULL,
+        Foreign Key (accountId) REFERENCES accounts(id) ON DELETE CASCADE,
+        Foreign Key (recipeId) REFERENCES recipes(id) ON DELETE CASCADE,
+        UNIQUE(accountId, recipeId)
+    ) default charset utf8 COMMENT '';
 
 INSERT INTO
     recipes (
