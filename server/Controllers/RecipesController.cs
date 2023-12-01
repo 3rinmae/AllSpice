@@ -30,4 +30,66 @@ public class RecipesController : ControllerBase
       return BadRequest(error.Message);
     }
   }
+
+  [HttpGet]
+  public ActionResult<List<Recipe>> GetRecipes()
+  {
+    try
+    {
+      List<Recipe> recipes = _recipesService.GetRecipes();
+      return Ok(recipes);
+    }
+    catch (Exception error)
+    {
+      return BadRequest(error.Message);
+    }
+  }
+
+  [HttpGet("{recipeId}")]
+  public ActionResult<Recipe> GetRecipeById(int recipeId)
+  {
+    try
+    {
+      {
+        Recipe recipe = _recipesService.GetRecipeById(recipeId);
+        return Ok(recipe);
+      }
+    }
+    catch (Exception error)
+    {
+      return BadRequest(error.Message);
+    }
+  }
+
+  [Authorize]
+  [HttpPut("{recipeId}")]
+  public ActionResult<Recipe> UpdateRecipe(int recipeId, [FromBody] Recipe recipeData)
+  {
+    try
+    {
+      Recipe recipe = _recipesService.UpdateRecipe(recipeId, recipeData);
+      return Ok(recipe);
+    }
+    catch (Exception error)
+    {
+      return BadRequest(error.Message);
+    }
+  }
+
+  [Authorize]
+  [HttpDelete("{recipeId}")]
+  public async Task<ActionResult<string>> DestroyRecipe(int recipeId)
+  {
+    try
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      string userId = userInfo.Id;
+      string Message = _recipesService.DestroyRecipe(recipeId, userId);
+      return Ok(Message);
+    }
+    catch (Exception error)
+    {
+      return BadRequest(error.Message);
+    }
+  }
 }
