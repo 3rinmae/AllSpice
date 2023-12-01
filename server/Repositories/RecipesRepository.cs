@@ -1,8 +1,4 @@
 
-
-
-
-
 namespace AllSpice.Repositories;
 
 public class RecipesRepository
@@ -27,9 +23,9 @@ public class RecipesRepository
         FROM recipes rec
         JOIN accounts acc ON rec.creatorId = acc.id
         WHERE rec.id = LAST_INSERT_ID();";
-    Recipe recipe = _db.Query<Recipe, Account, Recipe>(sql, (recipe, account) =>
+    Recipe recipe = _db.Query<Recipe, Profile, Recipe>(sql, (recipe, profile) =>
     {
-      recipe.Creator = account;
+      recipe.Creator = profile;
       return recipe;
     }, recipeData).FirstOrDefault();
     return recipe;
