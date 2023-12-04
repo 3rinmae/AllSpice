@@ -81,7 +81,8 @@ public class IngredientsRepository
       SET
       name = @Name,
       quantity = @Quantity
-      :";
+      WHERE id = @Id
+      ;";
     _db.Execute(sql, originalIngredient);
   }
 }

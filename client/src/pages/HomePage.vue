@@ -1,8 +1,13 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="">
-
-    </div>
+  <div class="container">
+    <section class="row">
+      <div class="col-4 d-flex p-3">
+        <p>Home</p>
+        <p>My Recipes</p>
+        <p>Favorites</p>
+      </div>
+    </section>
+    <section class="row"></section>
   </div>
 </template>
 

@@ -5,7 +5,7 @@
         <nav class="navbar d-flex flex-column navbar-expand-sm  px-3 row">
           <router-link class="navbar-brand d-block align-items-center text-center order-2 col-12" :to="{ name: 'Home' }">
             <div class="d-flex flex-column align-items-center text-center text-white">
-              <p class="fs-2 m-0">All-Spice</p>
+              <p class="fs-1 m-0">All-Spice</p>
               <p class="fs-5 m-0">Cherish Your Family Recipes</p>
             </div>
           </router-link>
@@ -13,12 +13,12 @@
             aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button> -->
-          <div class="d-flex align-items-center justify-content-end col-12">
+          <div class="d-flex align-items-center justify-content-end col-12 order-1">
             <div class="input-group input-group-sm w-25">
               <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search">
               <button class="btn btn-outline-white" type="button"><i class="mdi mdi-magnify"></i></button>
             </div>
-            <div class="d-flex navbar-collapse order-1" id="navbarText">
+            <div class=" d-flex " id="navbarText">
               <!-- <ul class="navbar-nav me-auto">
                 <li>
                   <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
@@ -89,6 +89,8 @@ a:hover {
   background-position: center;
   height: 222px;
   width: cover;
+  border-radius: 8px;
+  box-shadow: 4px 4px 22px rgba(0, 0, 0, 0.658);
 }
 
 /* @media screen and (min-width: 768px) {

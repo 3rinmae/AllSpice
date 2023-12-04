@@ -48,7 +48,7 @@ public class IngredientsService
   internal Ingredient UpdateIngredient(int ingredientId, Ingredient ingredientData)
   {
     Ingredient originalIngredient = GetIngredientById(ingredientId);
-    // originalIngredient.Name = ingredientData.Name ?? originalIngredient;
+    originalIngredient.Name = ingredientData.Name ?? originalIngredient.Name;
     originalIngredient.Quantity = ingredientData.Quantity ?? originalIngredient.Quantity;
 
     _repository.UpdateIngredient(originalIngredient);
