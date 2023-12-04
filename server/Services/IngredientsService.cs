@@ -44,4 +44,14 @@ public class IngredientsService
     List<Ingredient> ingredients = _repository.GetIngredientsByRecipeId(recipeId);
     return ingredients;
   }
+
+  internal Ingredient UpdateIngredient(int ingredientId, Ingredient ingredientData)
+  {
+    Ingredient originalIngredient = GetIngredientById(ingredientId);
+    // originalIngredient.Name = ingredientData.Name ?? originalIngredient;
+    originalIngredient.Quantity = ingredientData.Quantity ?? originalIngredient.Quantity;
+
+    _repository.UpdateIngredient(originalIngredient);
+    return originalIngredient;
+  }
 }

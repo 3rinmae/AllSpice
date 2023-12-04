@@ -1,4 +1,5 @@
 
+
 namespace AllSpice.Repositories;
 
 public class IngredientsRepository
@@ -71,5 +72,16 @@ public class IngredientsRepository
       return ingredient;
     }, new { recipeId }).ToList();
     return ingredients;
+  }
+
+  internal void UpdateIngredient(Ingredient originalIngredient)
+  {
+    string sql = @"
+      UPDATE ingredients
+      SET
+      name = @Name,
+      quantity = @Quantity
+      :";
+    _db.Execute(sql, originalIngredient);
   }
 }

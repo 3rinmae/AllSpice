@@ -1,30 +1,45 @@
 <template>
-  <nav class="navbar navbar-expand-sm navbar-dark  px-3">
-    <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column align-items-center">
+  <div class="container">
+    <section class="row nav-coverImg mt-4">
+      <div class="col-12">
+        <nav class="navbar d-flex flex-column navbar-expand-sm  px-3 row">
+          <router-link class="navbar-brand d-block align-items-center text-center order-2 col-12" :to="{ name: 'Home' }">
+            <div class="d-flex flex-column align-items-center text-center text-white">
+              <p class="fs-2 m-0">All-Spice</p>
+              <p class="fs-5 m-0">Cherish Your Family Recipes</p>
+            </div>
+          </router-link>
+          <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button> -->
+          <div class="d-flex align-items-center justify-content-end col-12">
+            <div class="input-group input-group-sm w-25">
+              <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search">
+              <button class="btn btn-outline-white" type="button"><i class="mdi mdi-magnify"></i></button>
+            </div>
+            <div class="d-flex navbar-collapse order-1" id="navbarText">
+              <!-- <ul class="navbar-nav me-auto">
+                <li>
+                  <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
+                    About
+                  </router-link>
+                </li>
+              </ul> -->
+              <!-- LOGIN COMPONENT HERE -->
+
+              <button class="btn text-light" @click="toggleTheme"><i class="mdi"
+                  :class="theme == 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"></i></button>
+              <Login />
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div class="col-12">
 
       </div>
-    </router-link>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto">
-        <li>
-          <!-- <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
-            About
-          </router-link> -->
-        </li>
-      </ul>
-      <!-- LOGIN COMPONENT HERE -->
-      <div>
-        <button class="btn text-light" @click="toggleTheme"><i class="mdi"
-            :class="theme == 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"></i></button>
-      </div>
-      <Login />
-    </div>
-  </nav>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -68,11 +83,15 @@ a:hover {
   border-bottom-right-radius: 0;
 }
 
-body {
-  background-image: url("https://plus.unsplash.com/premium_photo-1670963025556-c2d4dc880a45?q=80&w=2960&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+.nav-coverImg {
+  background-image: url(src/assets/img/baking.jpg);
+  background-size: cover;
+  background-position: center;
+  height: 222px;
+  width: cover;
 }
 
-@media screen and (min-width: 768px) {
+/* @media screen and (min-width: 768px) {
   nav {
     height: 222px;
     background-image: url(src/assets/img/baking.jpg);
@@ -81,5 +100,5 @@ body {
     background-size: cover;
     background-position: 50% 416%;
   }
-}
+} */
 </style>

@@ -47,4 +47,19 @@ public class IngredientsController : ControllerBase
       return BadRequest(error.Message);
     }
   }
+
+  [Authorize]
+  [HttpPut("{ingredientId}")]
+  public ActionResult<Ingredient> UpdateIngredient(int ingredientId, [FromBody] Ingredient ingredientData)
+  {
+    try
+    {
+      Ingredient ingredient = _ingredientsService.UpdateIngredient(ingredientId, ingredientData);
+      return Ok(ingredient);
+    }
+    catch (Exception error)
+    {
+      return BadRequest(error.Message);
+    }
+  }
 }
