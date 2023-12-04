@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <section class="row">
-      <div class="col-4 d-flex p-3">
-        <p>Home</p>
-        <p>My Recipes</p>
-        <p>Favorites</p>
+    <section class="row justify-content-center">
+      <div class="col-4 d-flex py-3 px-4 filter-card justify-content-between">
+        <p class="m-0">Home</p>
+        <p class="m-0">My Recipes</p>
+        <p class="m-0">Favorites</p>
       </div>
     </section>
     <section class="row"></section>
@@ -40,5 +40,11 @@ export default {
       object-position: center;
     }
   }
+}
+
+.filter-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 4px 4px 11px rgba(0, 0, 0, 0.435);
 }
 </style>
