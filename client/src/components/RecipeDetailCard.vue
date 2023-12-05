@@ -21,17 +21,17 @@
             </p>
           </div>
         </section>
-        <section class="row justify-content-evenly">
+        <section class="row justify-content-evenly align-content-between">
           <div class="col-5 p-2">
             <div class="bg-secondary rounded-top-2 fs-4 text-white text-center p-2">
               <p class="m-0">Instructions</p>
             </div>
-            <div class="bg-info h-100 rounded-bottom-2 p-2 d-block">
+            <div class="ii-card d-flex align-content-between flex-wrap justify-content-end rounded-bottom-2 p-2 d-block">
               <div>
                 <span class="fw-light">{{ activeRecipe.instructions }}</span>
               </div>
-              <div class="text-end">
-                <button class="btn" title="edit instructions" role="button" type="button">
+              <div class="">
+                <button class="btn " title="edit instructions" role="button" type="button">
                   <i class="mdi mdi-pencil"></i>
                 </button>
               </div>
@@ -41,7 +41,7 @@
             <div class="bg-secondary rounded-top-2 fs-4 text-white text-center p-2">
               <p class="m-0">Ingredients</p>
             </div>
-            <div class="bg-info h-100 rounded-bottom-2 p-2 d-block">
+            <div class="ii-card d-flex align-content-between flex-wrap justify-content-end rounded-bottom-2 p-2 d-block">
               <div>
                 <span class="fw-light">
                   <li v-for="ingredient in ingredients" :key="ingredient.name"></li>
@@ -55,7 +55,7 @@
             </div>
           </div>
         </section>
-        <section class="row text-end fixed-bottom">
+        <section class="row text-end">
           <div class="col-12">
             Published By: {{ activeRecipe.creator.name }}
           </div>
@@ -102,7 +102,7 @@ export default {
   background-image: v-bind(recipeCoverImg);
   background-size: cover;
   background-position: center;
-  height: 60vh;
+  height: 70vh;
 }
 
 .text-gb {
@@ -115,5 +115,10 @@ export default {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(14.7px);
   -webkit-backdrop-filter: blur(14.7px);
+}
+
+.ii-card {
+  height: 45vh;
+  background-color: #14a2b8;
 }
 </style>
