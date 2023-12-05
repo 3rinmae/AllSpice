@@ -4,7 +4,7 @@
       <div class="col-4 d-flex py-3 px-4 filter-card justify-content-between">
         <p class="m-0">Home</p>
         <p class="m-0">My Recipes</p>
-        <p class="m-0">Favorites</p>
+        <p @click="getMyFavorites()" class="m-0" role="button" type="button">Favorites</p>
       </div>
     </section>
     <section class="row">

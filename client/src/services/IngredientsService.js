@@ -4,7 +4,7 @@ import { logger } from "../utils/Logger"
 import { api } from "./AxiosService"
 
 function clearData() {
-  AppState.ingredients = {}
+  AppState.ingredients = null
 };
 class IngredientsService {
   async getIngredientsByRecipeId(recipeId) {

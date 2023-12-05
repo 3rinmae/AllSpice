@@ -41,10 +41,10 @@
             <div class="bg-secondary rounded-top-2 fs-4 text-white text-center p-2">
               <p class="m-0">Ingredients</p>
             </div>
-            <div class="ii-card d-flex align-content-between flex-wrap justify-content-end rounded-bottom-2 p-2 d-block">
+            <div class="ii-card d-flex align-content-between flex-wrap  rounded-bottom-2 p-2 d-block">
               <div>
                 <span class="fw-light">
-                  <li v-for="ingredient in ingredients" :key="ingredient.name"></li>
+                  <li v-for="ingredient in ingredients" :key="ingredient.id">{{ ingredient.name }}</li>
                 </span>
               </div>
               <div class="text-end">
