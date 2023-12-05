@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <section class="row nav-coverImg mt-4">
+  <div class="container-fluid">
+    <section class="row nav-coverImg m-4">
       <div class="col-12">
         <nav class="navbar d-flex flex-column navbar-expand-sm  px-3 row">
           <router-link class="navbar-brand d-block align-items-center text-center order-2 col-12" :to="{ name: 'Home' }">
