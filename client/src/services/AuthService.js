@@ -5,6 +5,9 @@ import { router } from '../router'
 import { accountService } from './AccountService'
 import { api } from './AxiosService'
 import { socketService } from './SocketService'
+import { logger } from "../utils/Logger"
+import Pop from "../utils/Pop"
+import { favoritesService } from "./FavoritesService"
 
 export const AuthService = initialize({
   domain,
@@ -20,13 +23,14 @@ export const AuthService = initialize({
   }
 })
 
-AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async function() {
+AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async function () {
   api.defaults.headers.authorization = AuthService.bearer
   api.interceptors.request.use(refreshAuthToken)
   AppState.user = AuthService.user
   await accountService.getAccount()
   socketService.authenticate(AuthService.bearer)
   // NOTE if there is something you want to do once the user is authenticated, place that here
+  getMyFavorites()
 })
 
 async function refreshAuthToken(config) {
@@ -42,4 +46,13 @@ async function refreshAuthToken(config) {
     socketService.authenticate(AuthService.bearer)
   }
   return config
+}
+
+async function getMyFavorites() {
+  try {
+    await favoritesService.getMyFavorites()
+  } catch (error) {
+    logger.error(error)
+    Pop.error(error)
+  }
 }

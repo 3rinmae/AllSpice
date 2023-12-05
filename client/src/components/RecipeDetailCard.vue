@@ -2,12 +2,7 @@
   <div class="container-fluid">
     <section class="row">
       <div class="col-4 m-0 p-0 recipe-img d-flex justify-content-end">
-        <p class="text-gb p-2 fs-4">
-          <i class="mdi mdi-heart-outline"></i>
-        </p>
-        <p class="text-gb p-2 fs-4">
-          <i class="mdi mdi-heart"></i>
-        </p>
+        <FavoriteUnfavoriteRecipe :id="activeRecipe.id" />
       </div>
       <div class="col-8 py-4 px-2">
         <section class="row">
@@ -48,7 +43,7 @@
                 </span>
               </div>
               <div class="text-end">
-                <button class="btn " title="edit instructions" role="button" type="button">
+                <button class="btn text-end" title="edit instructions" role="button" type="button">
                   <i class="mdi mdi-pencil"></i>
                 </button>
               </div>
@@ -73,26 +68,30 @@ import { computed, reactive, onMounted } from 'vue';
 import { logger } from "../utils/Logger";
 import Pop from "../utils/Pop";
 import { ingredientsService } from "../services/IngredientsService";
+import FavoriteUnfavoriteRecipe from "./FavoriteUnfavoriteRecipe.vue";
 export default {
-
   setup() {
     onMounted(() => {
-      // getIngredientsByRecipeId();
+      logger.log('recipe id', AppState.activeRecipe.id)
     });
     async function getIngredientsByRecipeId() {
       try {
-        await ingredientsService.getIngredientsByRecipeId(AppState.activeRecipe.id)
-      } catch (error) {
-        logger.error(error)
-        Pop.error(error)
+        await ingredientsService.getIngredientsByRecipeId(AppState.activeRecipe.id);
       }
-    };
+      catch (error) {
+        logger.error(error);
+        Pop.error(error);
+      }
+    }
+    ;
     return {
       activeRecipe: computed(() => AppState.activeRecipe),
-      recipeCoverImg: computed(() => `url(${AppState.activeRecipe.img})`),
-      ingredients: computed(() => AppState.ingredients)
-    }
-  }
+      recipeCoverImg: computed(() => `url(${AppState.activeRecipe?.img})`),
+      ingredients: computed(() => AppState.ingredients),
+      myFavorites: computed(() => AppState.myFavorites)
+    };
+  },
+  components: { FavoriteUnfavoriteRecipe }
 };
 </script>
 

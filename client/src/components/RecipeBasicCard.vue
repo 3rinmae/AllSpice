@@ -2,9 +2,7 @@
   <section class="recipe-card p-3 row">
     <div class="col-12 d-flex justify-content-between">
       <p class="text-gb fw-bold p-1 m-0">{{ recipeProp.category }}</p>
-      <p class="m-0 fs-4 text-gb text-end text-danger"> <i class="mdi mdi-heart-outline"></i> <i
-          class="mdi mdi-heart"></i>
-      </p>
+      <FavoriteUnfavoriteRecipe :id="recipeProp.id" />
     </div>
     <div @click="setActiveRecipe(recipeProp)" type="button" class="col-12 d-flex align-items-end">
       <div class="text-gb row">
@@ -24,6 +22,7 @@ import { Modal } from "bootstrap";
 import { logger } from "../utils/Logger";
 import Pop from "../utils/Pop";
 import { ingredientsService } from "../services/IngredientsService";
+import FavoriteUnfavoriteRecipe from "./FavoriteUnfavoriteRecipe.vue";
 export default {
   props: { recipeProp: { type: Recipe, required: true } },
   setup(props) {
@@ -31,20 +30,22 @@ export default {
       recipeCoverImg: computed(() => `url(${props.recipeProp.img})`),
       myFavorites: computed(() => AppState.myFavorites),
       setActiveRecipe(recipeProp) {
-        AppState.activeRecipe = recipeProp
-        Modal.getOrCreateInstance('#recipeDetailsModal').show()
-        this.getIngredientsByRecipeId()
+        AppState.activeRecipe = recipeProp;
+        Modal.getOrCreateInstance('#recipeDetailsModal').show();
+        this.getIngredientsByRecipeId();
       },
       async getIngredientsByRecipeId() {
         try {
-          await ingredientsService.getIngredientsByRecipeId(AppState.activeRecipe.id)
-        } catch (error) {
-          logger.error(error)
-          Pop.error(error)
+          await ingredientsService.getIngredientsByRecipeId(AppState.activeRecipe.id);
+        }
+        catch (error) {
+          logger.error(error);
+          Pop.error(error);
         }
       }
-    }
-  }
+    };
+  },
+  components: { FavoriteUnfavoriteRecipe }
 };
 </script>
 
