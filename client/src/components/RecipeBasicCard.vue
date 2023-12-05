@@ -1,7 +1,9 @@
 <template>
-  <section class="recipe-card p-3 row">
+  <section class="recipe-card row">
     <div class="col-12 d-flex justify-content-between">
-      <p class="text-gb fw-bold p-1 m-0">{{ recipeProp.category }}</p>
+      <div class="p-3">
+        <p class="text-gb fw-bold p-1 m-0">{{ recipeProp.category }}</p>
+      </div>
       <FavoriteUnfavoriteRecipe :id="recipeProp.id" />
     </div>
     <div @click="setActiveRecipe(recipeProp)" type="button" class="col-12 d-flex align-items-end">

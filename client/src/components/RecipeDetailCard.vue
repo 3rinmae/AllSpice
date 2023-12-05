@@ -1,7 +1,7 @@
 <template>
-  <div class="container-fluid">
+  <div v-if="activeRecipe" class="container-fluid">
     <section class="row">
-      <div class="col-4 m-0 p-0 recipe-img d-flex justify-content-end">
+      <div class="col-4 m-0 pe-3 recipe-img d-flex justify-content-end">
         <FavoriteUnfavoriteRecipe :id="activeRecipe.id" />
       </div>
       <div class="col-8 py-4 px-2">
@@ -26,8 +26,10 @@
                 <span class="fw-light">{{ activeRecipe.instructions }}</span>
               </div>
               <div class="">
-                <button class="btn " title="edit instructions" role="button" type="button">
+                <button @click="editable.edit = !editable.edit" class="btn " title="edit instructions" role="button"
+                  type="button">
                   <i class="mdi mdi-pencil"></i>
+                  <!-- <i v-else class="mdi mdi-check"></i> -->
                 </button>
               </div>
             </div>
@@ -36,10 +38,10 @@
             <div class="bg-secondary rounded-top-2 fs-4 text-white text-center p-2">
               <p class="m-0">Ingredients</p>
             </div>
-            <div class="ii-card d-flex align-content-between flex-wrap  rounded-bottom-2 p-2 d-block">
+            <div class="ii-card d-flex align-content-between flex-wrap justify-content-end rounded-bottom-2 p-2 d-block">
               <div>
-                <span class="fw-light">
-                  <li v-for="ingredient in ingredients" :key="ingredient.id">{{ ingredient.name }}</li>
+                <span v-if="ingredients" class="fw-light">
+                  <li v-for=" ingredient  in  ingredients " :key="ingredient.id">{{ ingredient.name }}</li>
                 </span>
               </div>
               <div class="text-end">
@@ -64,15 +66,16 @@
 
 <script>
 import { AppState } from '../AppState';
-import { computed, reactive, onMounted } from 'vue';
+import { computed, reactive, onMounted, ref } from 'vue';
 import { logger } from "../utils/Logger";
 import Pop from "../utils/Pop";
 import { ingredientsService } from "../services/IngredientsService";
 import FavoriteUnfavoriteRecipe from "./FavoriteUnfavoriteRecipe.vue";
 export default {
   setup() {
+    const editable = ref({ edit: false })
     onMounted(() => {
-      logger.log('recipe id', AppState.activeRecipe.id)
+      // logger.log('recipe id', AppState.activeRecipe.id)
     });
     async function getIngredientsByRecipeId() {
       try {
@@ -85,6 +88,7 @@ export default {
     }
     ;
     return {
+      editable,
       activeRecipe: computed(() => AppState.activeRecipe),
       recipeCoverImg: computed(() => `url(${AppState.activeRecipe?.img})`),
       ingredients: computed(() => AppState.ingredients),

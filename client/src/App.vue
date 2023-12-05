@@ -8,13 +8,25 @@
   <footer class="">
   </footer>
 
-  <div class="modal fade" id="recipeDetailsModal" tabindex="-1" data-bs-keyboard="false" role="dialog"
-    aria-labelledby="modalTitleId" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-top modal-dialog-scrollable modal-xl" role="document">
+  <!-- <div class="modal fade" id="recipeDetailsModal" tabindex="-1" data-bs-keyboard="false" role="dialog"
+      aria-labelledby="modalTitleId" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-top modal-dialog-scrollable modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0" v-if="activeRecipe">
+            <RecipeDetailCard />
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+  <div class="modal fade" id="recipeDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
-        <div class="modal-body p-0" v-if="activeRecipe">
+
+        <div class="modal-body p-0">
           <RecipeDetailCard />
         </div>
+
       </div>
     </div>
   </div>
