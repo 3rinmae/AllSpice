@@ -43,7 +43,9 @@
             </div>
             <div class="bg-info h-100 rounded-bottom-2 p-2 d-block">
               <div>
-                <span class="fw-light">add ingredients</span>
+                <span class="fw-light">
+                  <li v-for="ingredient in ingredients" :key="ingredient.name"></li>
+                </span>
               </div>
               <div class="text-end">
                 <button class="btn " title="edit instructions" role="button" type="button">
@@ -68,12 +70,27 @@
 <script>
 import { AppState } from '../AppState';
 import { computed, reactive, onMounted } from 'vue';
+import { logger } from "../utils/Logger";
+import Pop from "../utils/Pop";
+import { ingredientsService } from "../services/IngredientsService";
 export default {
 
   setup() {
+    onMounted(() => {
+      // getIngredientsByRecipeId();
+    });
+    async function getIngredientsByRecipeId() {
+      try {
+        await ingredientsService.getIngredientsByRecipeId(AppState.activeRecipe.id)
+      } catch (error) {
+        logger.error(error)
+        Pop.error(error)
+      }
+    };
     return {
       activeRecipe: computed(() => AppState.activeRecipe),
-      recipeCoverImg: computed(() => `url(${AppState.activeRecipe.img})`)
+      recipeCoverImg: computed(() => `url(${AppState.activeRecipe.img})`),
+      ingredients: computed(() => AppState.ingredients)
     }
   }
 };
@@ -85,7 +102,7 @@ export default {
   background-image: v-bind(recipeCoverImg);
   background-size: cover;
   background-position: center;
-  height: 50vh;
+  height: 60vh;
 }
 
 .text-gb {

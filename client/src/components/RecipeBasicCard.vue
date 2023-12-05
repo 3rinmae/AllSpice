@@ -21,6 +21,9 @@ import { AppState } from '../AppState';
 import { computed, reactive, onMounted } from 'vue';
 import { Recipe } from "../models/Recipe";
 import { Modal } from "bootstrap";
+import { logger } from "../utils/Logger";
+import Pop from "../utils/Pop";
+import { ingredientsService } from "../services/IngredientsService";
 export default {
   props: { recipeProp: { type: Recipe, required: true } },
   setup(props) {
@@ -30,7 +33,16 @@ export default {
       setActiveRecipe(recipeProp) {
         AppState.activeRecipe = recipeProp
         Modal.getOrCreateInstance('#recipeDetailsModal').show()
+        this.getIngredientsByRecipeId()
       },
+      async getIngredientsByRecipeId() {
+        try {
+          await ingredientsService.getIngredientsByRecipeId(AppState.activeRecipe.id)
+        } catch (error) {
+          logger.error(error)
+          Pop.error(error)
+        }
+      }
     }
   }
 };
