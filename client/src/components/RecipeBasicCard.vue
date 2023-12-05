@@ -1,18 +1,18 @@
 <template>
-  <div class="recipe-card p-3 row">
+  <section class="recipe-card p-3 row">
     <div class="col-12 d-flex justify-content-between">
       <p class="text-gb fw-bold p-1 m-0">{{ recipeProp.category }}</p>
       <p class="m-0 fs-4 text-gb text-end text-danger"> <i class="mdi mdi-heart-outline"></i> <i
           class="mdi mdi-heart"></i>
       </p>
     </div>
-    <div class="col-12 d-flex align-items-end">
+    <div @click="setActiveRecipe(recipeProp)" type="button" class="col-12 d-flex align-items-end">
       <div class="text-gb row">
         <p class="fw-bold m-0 fs-4 col-12">{{ recipeProp.title }}</p>
         <p class="m-0 col-12">Creator: {{ recipeProp.creator.name }}</p>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 
@@ -20,11 +20,17 @@
 import { AppState } from '../AppState';
 import { computed, reactive, onMounted } from 'vue';
 import { Recipe } from "../models/Recipe";
+import { Modal } from "bootstrap";
 export default {
   props: { recipeProp: { type: Recipe, required: true } },
   setup(props) {
     return {
-      recipeCoverImg: computed(() => `url(${props.recipeProp.img})`)
+      recipeCoverImg: computed(() => `url(${props.recipeProp.img})`),
+      myFavorites: computed(() => AppState.myFavorites),
+      setActiveRecipe(recipeProp) {
+        AppState.activeRecipe = recipeProp
+        Modal.getOrCreateInstance('#recipeDetailsModal').show()
+      },
     }
   }
 };
