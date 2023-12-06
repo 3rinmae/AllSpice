@@ -46,4 +46,19 @@ public class AccountController : ControllerBase
       return BadRequest(error.Message);
     }
   }
+
+  [Authorize]
+  [HttpPut]
+  public ActionResult<Account> Edit([FromBody] Account editData, string userEmail)
+  {
+    try
+    {
+      Account account = _accountService.Edit(editData, userEmail);
+      return Ok(account);
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+  }
 }
