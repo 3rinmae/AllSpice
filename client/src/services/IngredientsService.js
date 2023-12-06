@@ -23,6 +23,12 @@ class IngredientsService {
     const res = await api.delete(`api/ingredients/${ingredient.id}`)
     logger.log('ingredient deleted', res.data)
   }
+
+  async createIngredient(ingredient) {
+    const res = await api.post('api/ingredients', ingredient)
+    logger.log('create ingredient', res.data)
+    AppState.ingredients.push(new Ingredient(res.data))
+  }
 }
 
 export const ingredientsService = new IngredientsService()

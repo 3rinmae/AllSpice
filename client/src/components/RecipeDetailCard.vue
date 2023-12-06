@@ -63,6 +63,15 @@
                     </button>
                   </span>
                 </span>
+                <span class="d-flex">
+                  <input type="text" v-model="editableIngredients.quantity" name="quantity" id="editIngredientQuantity"
+                    class="form-control w-50">
+                  <input type="text" v-model="editableIngredients.name" name="name" id="editIngredientName"
+                    class="form-control">
+                  <button @click="createIngredient()" class="btn" title="save">
+                    <i class="mdi mdi-plus"></i>
+                  </button>
+                </span>
               </div>
             </div>
           </div>
@@ -119,6 +128,7 @@ export default {
       editable,
       editableIng,
       editableInstructions,
+      editableIngredients,
       activeRecipe: computed(() => AppState.activeRecipe),
       recipeCoverImg: computed(() => `url(${AppState.activeRecipe?.img})`),
       ingredients: computed(() => AppState.ingredients),
@@ -165,6 +175,16 @@ export default {
             return
           }
           await ingredientsService.destroyIngredient(ingredient)
+        } catch (error) {
+          logger.error(error);
+          Pop.error(error);
+        }
+      },
+      async createIngredient() {
+        try {
+          editableIngredients.value.recipeId = this.activeRecipe.id
+          await ingredientsService.createIngredient(editableIngredients.value)
+          editableIngredients.value = {}
         } catch (error) {
           logger.error(error);
           Pop.error(error);
