@@ -55,12 +55,12 @@
           </div>
         </section>
         <section class="row text-end">
-          <div class="col-12 d-flex align-items-center justify-content-between">
-            <button @click="destroyRecipe()" class="btn fs-4" role="button" title="delete recipe"> <i
-                class="mdi mdi-delete-outline"></i></button>
-            <span class="">
+          <div class="col-12 d-flex align-items-center justify-content-end">
+            <span class="text-end">
               Published By: {{ activeRecipe.creator.name }}
             </span>
+            <button v-if="activeRecipe.creatorId == accountId" @click="destroyRecipe()" class="btn fs-4" role="button"
+              title="delete recipe"> <i class="mdi mdi-delete-outline"></i></button>
           </div>
         </section>
       </div>

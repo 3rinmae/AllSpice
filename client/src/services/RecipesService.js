@@ -21,7 +21,7 @@ class RecipesService {
     const recipeId = AppState.activeRecipe.id
     const res = await api.delete(`api/recipes/${recipeId}`)
     logger.log('recipe deleted', res.data)
-    AppState.recipes = AppState.recipes.filter()
+    this.getRecipes()
   }
 }
 
