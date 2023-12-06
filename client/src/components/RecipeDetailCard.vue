@@ -23,13 +23,16 @@
             </div>
             <div class="ii-card d-flex align-content-between flex-wrap justify-content-end rounded-bottom-2 p-2 d-block">
               <div>
-                <span class="fw-light">{{ activeRecipe.instructions }}</span>
+                <span v-if="editable.edit == false" class="fw-light">{{ activeRecipe.instructions }}</span>
+                <textarea v-else name="" id="" rows="10" class="form-control">{{ activeRecipe.instructions }}</textarea>
               </div>
               <div class="">
-                <button @click="editable.edit = !editable.edit" class="btn " title="edit instructions" role="button"
-                  type="button">
+                <button v-if="editable.edit == false" @click="editable.edit = !editable.edit" class="btn "
+                  title="edit instructions" role="button" type="button">
                   <i class="mdi mdi-pencil"></i>
-                  <!-- <i v-else class="mdi mdi-check"></i> -->
+                </button>
+                <button v-else @click="editable.edit = !editable.edit; saveEdit()" class="btn">
+                  <i class="mdi mdi-check"></i>
                 </button>
               </div>
             </div>
@@ -41,7 +44,8 @@
             <div class="ii-card d-flex align-content-between flex-wrap justify-content-end rounded-bottom-2 p-2 d-block">
               <div>
                 <span v-if="ingredients" class="fw-light">
-                  <li v-for=" ingredient  in  ingredients " :key="ingredient.id">{{ ingredient.name }}</li>
+                  <li v-for=" ingredient  in  ingredients " :key="ingredient.id">{{ ingredient.quantity + " " +
+                    ingredient.name }}</li>
                 </span>
               </div>
               <div class="text-end">
@@ -66,7 +70,7 @@
 
 <script>
 import { AppState } from '../AppState';
-import { computed, reactive, onMounted, ref } from 'vue';
+import { computed, reactive, onMounted, ref, watchEffect } from 'vue';
 import { logger } from "../utils/Logger";
 import Pop from "../utils/Pop";
 import { ingredientsService } from "../services/IngredientsService";
@@ -74,6 +78,10 @@ import FavoriteUnfavoriteRecipe from "./FavoriteUnfavoriteRecipe.vue";
 export default {
   setup() {
     const editable = ref({ edit: false })
+    watchEffect(() => {
+      logger.log('watch effect working on recipe edit')
+      // editable.value = 
+    })
     onMounted(() => {
       // logger.log('recipe id', AppState.activeRecipe.id)
     });
@@ -92,7 +100,16 @@ export default {
       activeRecipe: computed(() => AppState.activeRecipe),
       recipeCoverImg: computed(() => `url(${AppState.activeRecipe?.img})`),
       ingredients: computed(() => AppState.ingredients),
-      myFavorites: computed(() => AppState.myFavorites)
+      myFavorites: computed(() => AppState.myFavorites),
+
+      async saveEdit() {
+        try {
+
+        } catch (error) {
+          logger.error(error);
+          Pop.error(error);
+        }
+      }
     };
   },
   components: { FavoriteUnfavoriteRecipe }
