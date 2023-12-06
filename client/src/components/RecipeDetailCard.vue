@@ -21,7 +21,7 @@
             <div class="ii-card d-flex align-content-between flex-wrap justify-content-end rounded-bottom-2 p-2 d-block">
               <div>
                 <span v-if="editable.edit == false" class="fw-light">{{ activeRecipe.instructions }}</span>
-                <textarea v-else v-model="editableInstructions.instructions" name="" id="" rows="10"
+                <textarea v-else v-model="editableInstructions.instructions" name="" id="" rows="13"
                   class="form-control">{{ activeRecipe.instructions }}</textarea>
               </div>
               <div v-if="activeRecipe.creatorId == accountId" class="">
@@ -29,7 +29,7 @@
                   title="edit instructions" role="button" type="button">
                   <i class="mdi mdi-pencil"></i>
                 </button>
-                <button v-else @click="editable.edit = !editable.edit; saveEditInstructions()" class="btn">
+                <button v-else @click="editable.edit = !editable.edit; saveEditInstructions()" class="btn" title="save">
                   <i class="mdi mdi-check"></i>
                 </button>
               </div>
@@ -41,13 +41,20 @@
             </div>
             <div class="ii-card d-flex align-content-between flex-wrap justify-content-end rounded-bottom-2 p-2 d-block">
               <div>
-                <span v-if="ingredients" class="fw-light">
+                <span v-if="editableIng.edit == false" class="fw-light">
                   <li v-for=" ingredient  in  ingredients " :key="ingredient.id">{{ ingredient.quantity + " " +
                     ingredient.name }}</li>
+
                 </span>
+                <textarea v-else v-model="editableIngredients[ingredients]" name="" id="" rows="13" class="form-control">
+                  <li v-for=" ingredient  in  ingredients " :key="ingredient.id">{{ ingredient.quantity + " " +
+                    ingredient.name }}</li>
+                    {{ ingredients.quantity }}
+                </textarea>
               </div>
               <div v-if="activeRecipe.creatorId == accountId" class="text-end">
-                <button class="btn text-end" title="edit instructions" role="button" type="button">
+                <button v-if="editableIng.edit == false" @click="editableIng.edit = !editableIng.edit"
+                  class="btn text-end" title="edit ingredients" role="button" type="button">
                   <i class="mdi mdi-pencil"></i>
                 </button>
               </div>
@@ -82,10 +89,13 @@ import { Modal } from "bootstrap";
 export default {
   setup() {
     const editable = ref({ edit: false })
+    const editableIng = ref({ edit: false })
     const editableInstructions = ref({})
+    const editableIngredients = ref({})
     watchEffect(() => {
       logger.log('watch effect working on recipe edit')
       editableInstructions.value = AppState.activeRecipe
+      editableIngredients.value = AppState.ingredients
     })
     onMounted(() => {
       // logger.log('recipe id', AppState.activeRecipe.id)
@@ -102,7 +112,9 @@ export default {
     ;
     return {
       editable,
+      editableIng,
       editableInstructions,
+      editableIngredients,
       activeRecipe: computed(() => AppState.activeRecipe),
       recipeCoverImg: computed(() => `url(${AppState.activeRecipe?.img})`),
       ingredients: computed(() => AppState.ingredients),

@@ -63,11 +63,32 @@ public class RecipesRepository
       acc.*
       FROM recipes rec
       JOIN accounts acc ON rec.creatorId = acc.id;";
+
     List<Recipe> recipes = _db.Query<Recipe, Profile, Recipe>(sql, (recipe, profile) =>
     {
       recipe.Creator = profile;
       return recipe;
     }).ToList();
+    return recipes;
+  }
+
+  internal List<Recipe> GetRecipesWithQuery(string title)
+  {
+    title = $"%{title}%";
+
+    string sql = @"
+      SELECT
+      rec.*,
+      acc.*
+      FROM recipes rec
+      JOIN accounts acc ON rec.creatorId = acc.id
+      WHERE rec.title LIKE @title;";
+
+    List<Recipe> recipes = _db.Query<Recipe, Profile, Recipe>(sql, (recipe, profile) =>
+    {
+      recipe.Creator = profile;
+      return recipe;
+    }, new { title }).ToList();
     return recipes;
   }
 
