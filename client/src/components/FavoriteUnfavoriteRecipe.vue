@@ -4,7 +4,7 @@
       <i class="fs-5 mdi mdi-heart"></i>
     </span>
     <span v-else @click="favorite()" class="" role="button">
-      <i class="fs-4 mdi mdi-heart-outline"></i>
+      <i class="fs-5 mdi mdi-heart-outline"></i>
     </span>
   </div>
 </template>

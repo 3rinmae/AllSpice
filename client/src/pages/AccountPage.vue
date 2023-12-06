@@ -25,6 +25,7 @@
 import { computed, ref, watchEffect } from 'vue';
 import { AppState } from '../AppState';
 import { logger } from "../utils/Logger";
+import { accountService } from "../services/AccountService";
 export default {
   setup() {
     const editable = ref({})

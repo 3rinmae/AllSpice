@@ -24,7 +24,8 @@
             <div class="ii-card d-flex align-content-between flex-wrap justify-content-end rounded-bottom-2 p-2 d-block">
               <div>
                 <span v-if="editable.edit == false" class="fw-light">{{ activeRecipe.instructions }}</span>
-                <textarea v-else name="" id="" rows="10" class="form-control">{{ activeRecipe.instructions }}</textarea>
+                <textarea v-else v-model="editableInstructions.instructions" name="" id="" rows="10"
+                  class="form-control">{{ activeRecipe.instructions }}</textarea>
               </div>
               <div class="">
                 <button v-if="editable.edit == false" @click="editable.edit = !editable.edit" class="btn "
@@ -75,12 +76,14 @@ import { logger } from "../utils/Logger";
 import Pop from "../utils/Pop";
 import { ingredientsService } from "../services/IngredientsService";
 import FavoriteUnfavoriteRecipe from "./FavoriteUnfavoriteRecipe.vue";
+import { recipesService } from "../services/RecipesService";
 export default {
   setup() {
     const editable = ref({ edit: false })
+    const editableInstructions = ref({})
     watchEffect(() => {
       logger.log('watch effect working on recipe edit')
-      // editable.value = 
+      editableInstructions.value = AppState.activeRecipe
     })
     onMounted(() => {
       // logger.log('recipe id', AppState.activeRecipe.id)
@@ -97,6 +100,7 @@ export default {
     ;
     return {
       editable,
+      editableInstructions,
       activeRecipe: computed(() => AppState.activeRecipe),
       recipeCoverImg: computed(() => `url(${AppState.activeRecipe?.img})`),
       ingredients: computed(() => AppState.ingredients),
@@ -104,7 +108,9 @@ export default {
 
       async saveEdit() {
         try {
-
+          const updatedInstructions = editableInstructions.value;
+          logger.log('editing instructions', updatedInstructions)
+          await recipesService.saveEdit(updatedInstructions);
         } catch (error) {
           logger.error(error);
           Pop.error(error);
