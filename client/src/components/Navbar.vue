@@ -13,24 +13,28 @@
             aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button> -->
-          <div class="d-flex align-items-center justify-content-end col-12 order-1">
-            <div class="input-group input-group-sm w-25">
-              <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search">
-              <button class="btn btn-outline-white" type="button"><i class="mdi mdi-magnify"></i></button>
-            </div>
-            <div class=" d-flex " id="navbarText">
-              <!-- <ul class="navbar-nav me-auto">
-                <li>
-                  <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
-                    About
-                  </router-link>
-                </li>
-              </ul> -->
-              <!-- LOGIN COMPONENT HERE -->
+          <div class="d-flex align-items-center justify-content-between col-12 order-1">
+            <button class=" btn btn-outline-white " type="button" title="add recipe"><i
+                class="mdi mdi-folder-plus-outline"></i></button>
+            <div class="d-flex align-items-center">
+              <div class=" d-flex">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                  aria-describedby="search">
+                <button class="btn btn-outline-white" type="button"><i class="mdi mdi-magnify"></i></button>
+              </div>
+              <div class=" d-flex " id="navbarText">
+                <!-- <ul class="navbar-nav me-auto">
+                  <li>
+                    <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
+                      About
+                    </router-link>
+                  </li>
+                </ul> -->
+                <!-- LOGIN COMPONENT HERE -->
 
-              <button class="btn text-light" @click="toggleTheme"><i class="mdi"
-                  :class="theme == 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"></i></button>
-              <Login />
+
+                <Login />
+              </div>
             </div>
           </div>
         </nav>

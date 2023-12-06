@@ -15,5 +15,5 @@ export const AppState = reactive({
   myFavorites: [],
   /** @type {import('./models/Ingredient.js').Ingredient[]} */
   ingredients: [],
-  
+  categories: ["Soup", "Specialty Coffee", "Italian", "Cheese", "Mexican", "Dessert", "Indian", "Pasta", "Snack", "Other"]
 })

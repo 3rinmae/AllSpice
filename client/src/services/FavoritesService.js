@@ -3,6 +3,7 @@ import { Favorite } from "../models/Favorite"
 import { RecipeFavorite } from "../models/RecipeFavorite"
 import { logger } from "../utils/Logger"
 import { api } from "./AxiosService"
+import { recipesService } from "./RecipesService"
 
 class FavoritesService {
   async getMyFavorites() {
@@ -16,6 +17,7 @@ class FavoritesService {
     const res = await api.delete(`api/favorites/${isFav.favoriteId}`)
     AppState.myFavorites = AppState.myFavorites.filter(recipeFavorite => recipeFavorite.favoriteId != isFav.favoriteId)
     // this.getMyFavorites()
+    recipesService.showMyFavorites()
     return res.data
   }
 
