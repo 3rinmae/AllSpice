@@ -10,6 +10,10 @@ class RecipesService {
     AppState.recipes = res.data.map((recipe) => new Recipe(recipe))
   }
 
+  async showMyFavorites() {
+    AppState.recipes = AppState.myFavorites.map((recipe) => new Recipe(recipe))
+  }
+
   async saveEdit(updatedInstructions) {
     const recipeId = updatedInstructions.id
     const res = await api.put(`api/recipes/${recipeId}`, updatedInstructions)

@@ -15,6 +15,7 @@ class FavoritesService {
   async unfavorite(isFav) {
     const res = await api.delete(`api/favorites/${isFav.favoriteId}`)
     AppState.myFavorites = AppState.myFavorites.filter(recipeFavorite => recipeFavorite.favoriteId != isFav.favoriteId)
+    // this.getMyFavorites()
     return res.data
   }
 

@@ -4,7 +4,7 @@
       <div class="col-4 d-flex py-3 px-4 filter-card justify-content-between">
         <p class="m-0">Home</p>
         <p class="m-0">My Recipes</p>
-        <p @click="getMyFavorites()" class="m-0" role="button" type="button">Favorites</p>
+        <p @click="showMyFavorites()" class="m-0" role="button" type="button">Favorites</p>
       </div>
     </section>
     <section class="row">
@@ -27,9 +27,11 @@ import { logger } from "../utils/Logger";
 import Pop from "../utils/Pop";
 import { AppState } from "../AppState";
 import RecipeBasicCard from "../components/RecipeBasicCard.vue";
+import { Recipe } from "../models/Recipe";
 
 export default {
   setup() {
+    // const wantsToSeeFavorites = ref({ edit: false })
     onMounted(() => {
       getRecipes();
     });
@@ -44,7 +46,15 @@ export default {
     }
     return {
       recipes: computed(() => AppState.recipes),
-      account: computed(() => AppState.account)
+      account: computed(() => AppState.account),
+      async showMyFavorites() {
+        try {
+          await recipesService.showMyFavorites()
+        } catch (error) {
+          logger.error(error);
+          Pop.error(error);
+        }
+      }
     };
   },
   components: { RecipeBasicCard }

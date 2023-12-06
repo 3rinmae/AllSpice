@@ -65,6 +65,7 @@ public class FavoritesRepository
       recipeFavorites.FavoriteId = favorite.Id;
       recipeFavorites.AccountId = favorite.AccountId;
       recipeFavorites.CreatorId = profile.Id;
+      recipeFavorites.Creator = profile;
       return recipeFavorites;
     }, new { userId }).ToList();
     return recipeFavorites;
