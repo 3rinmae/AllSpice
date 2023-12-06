@@ -13,6 +13,16 @@ class IngredientsService {
     logger.log('get ingredients by recipe id', res.data)
     AppState.ingredients = res.data.map((ingredient) => new Ingredient(ingredient))
   }
+
+  async saveEditIngredients(ingredient) {
+    const res = await api.put(`api/ingredients/${ingredient.id}`, ingredient)
+    logger.log('save edit ingredient res.data', res.data)
+  }
+
+  async destroyIngredient(ingredient) {
+    const res = await api.delete(`api/ingredients/${ingredient.id}`)
+    logger.log('ingredient deleted', res.data)
+  }
 }
 
 export const ingredientsService = new IngredientsService()

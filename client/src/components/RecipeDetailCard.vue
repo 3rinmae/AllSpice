@@ -39,24 +39,30 @@
             <div class="bg-secondary rounded-top-2 fs-4 text-white text-center p-2">
               <p class="m-0">Ingredients</p>
             </div>
-            <div class="ii-card d-flex align-content-between flex-wrap justify-content-end rounded-bottom-2 p-2 d-block">
+            <div class="ii-card rounded-bottom-2 p-2 ">
               <div>
-                <span v-if="editableIng.edit == false" class="fw-light">
-                  <li v-for=" ingredient  in  ingredients " :key="ingredient.id">{{ ingredient.quantity + " " +
-                    ingredient.name }}</li>
-
+                <span v-for=" ingredient  in  ingredients " :key="ingredient.id" class="fw-light">
+                  <span v-if="ingredient.edit == false" class="d-flex align-items-center justify-content-between">
+                    <li class="">{{ ingredient.quantity + " " + ingredient.name }}</li>
+                    <div v-if="activeRecipe.creatorId == accountId" class="text-end">
+                      <button @click="ingredient.edit = !ingredient.edit" class="btn text-end" title="edit ingredients"
+                        role="button" type="button">
+                        <i class="mdi mdi-pencil"></i>
+                      </button>
+                      <button @click="destroyIngredient(ingredient)" role="button" title="delete" class="btn">
+                        <i class="mdi mdi-delete-outline"></i>
+                      </button>
+                    </div>
+                  </span>
+                  <span v-else class="d-flex">
+                    <input type="text" v-model="ingredient.quantity" name="quantity" id="editIngredientQuantity"
+                      class="form-control w-50">
+                    <input type="text" v-model="ingredient.name" name="name" id="editIngredientName" class="form-control">
+                    <button @click="saveEditIngredients(ingredient)" class="btn" title="save">
+                      <i class="mdi mdi-check"></i>
+                    </button>
+                  </span>
                 </span>
-                <textarea v-else v-model="editableIngredients[ingredients]" name="" id="" rows="13" class="form-control">
-                  <li v-for=" ingredient  in  ingredients " :key="ingredient.id">{{ ingredient.quantity + " " +
-                    ingredient.name }}</li>
-                    {{ ingredients.quantity }}
-                </textarea>
-              </div>
-              <div v-if="activeRecipe.creatorId == accountId" class="text-end">
-                <button v-if="editableIng.edit == false" @click="editableIng.edit = !editableIng.edit"
-                  class="btn text-end" title="edit ingredients" role="button" type="button">
-                  <i class="mdi mdi-pencil"></i>
-                </button>
               </div>
             </div>
           </div>
@@ -95,7 +101,6 @@ export default {
     watchEffect(() => {
       logger.log('watch effect working on recipe edit')
       editableInstructions.value = AppState.activeRecipe
-      editableIngredients.value = AppState.ingredients
     })
     onMounted(() => {
       // logger.log('recipe id', AppState.activeRecipe.id)
@@ -114,7 +119,6 @@ export default {
       editable,
       editableIng,
       editableInstructions,
-      editableIngredients,
       activeRecipe: computed(() => AppState.activeRecipe),
       recipeCoverImg: computed(() => `url(${AppState.activeRecipe?.img})`),
       ingredients: computed(() => AppState.ingredients),
@@ -134,8 +138,33 @@ export default {
 
       async destroyRecipe() {
         try {
+          const yes = await Pop.confirm('Are you sure you would like to delete this recipe?')
+          if (!yes) {
+            return
+          }
           await recipesService.destroyRecipe()
           Modal.getOrCreateInstance('#recipeDetailsModal').hide()
+        } catch (error) {
+          logger.error(error);
+          Pop.error(error);
+        }
+      },
+
+      async saveEditIngredients(ingredient) {
+        try {
+          await ingredientsService.saveEditIngredients(ingredient)
+          ingredient.edit = !ingredient.edit
+        } catch (error) {
+        }
+      },
+
+      async destroyIngredient(ingredient) {
+        try {
+          const yes = await Pop.confirm('Are you sure you would like to delete this ingredient?')
+          if (!yes) {
+            return
+          }
+          await ingredientsService.destroyIngredient(ingredient)
         } catch (error) {
           logger.error(error);
           Pop.error(error);
