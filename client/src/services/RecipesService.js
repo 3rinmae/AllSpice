@@ -23,7 +23,7 @@ class RecipesService {
     AppState.recipes = AppState.myRecipes.map((recipe) => new Recipe(recipe))
   }
 
-  async saveEdit(updatedInstructions) {
+  async saveEditInstructions(updatedInstructions) {
     const recipeId = updatedInstructions.id
     const res = await api.put(`api/recipes/${recipeId}`, updatedInstructions)
     logger.log("recipe service update", res.data)

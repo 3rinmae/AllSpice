@@ -29,7 +29,7 @@
                   title="edit instructions" role="button" type="button">
                   <i class="mdi mdi-pencil"></i>
                 </button>
-                <button v-else @click="editable.edit = !editable.edit; saveEdit()" class="btn">
+                <button v-else @click="editable.edit = !editable.edit; saveEditInstructions()" class="btn">
                   <i class="mdi mdi-check"></i>
                 </button>
               </div>
@@ -109,11 +109,11 @@ export default {
       myFavorites: computed(() => AppState.myFavorites),
       accountId: computed(() => AppState.account.id),
 
-      async saveEdit() {
+      async saveEditInstructions() {
         try {
           const updatedInstructions = editableInstructions.value;
           logger.log('editing instructions', updatedInstructions)
-          await recipesService.saveEdit(updatedInstructions);
+          await recipesService.saveEditInstructions(updatedInstructions);
         } catch (error) {
           logger.error(error);
           Pop.error(error);

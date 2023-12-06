@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { computed, onMounted } from "vue";
+import { computed, onMounted, watch } from "vue";
 import { recipesService } from "../services/RecipesService";
 import { logger } from "../utils/Logger";
 import Pop from "../utils/Pop";
@@ -35,6 +35,7 @@ export default {
     onMounted(() => {
       getRecipes();
     });
+    // watch(); how would I use this to update when unfavoriting an item in favorites view?
     async function getRecipes() {
       try {
         await recipesService.getRecipes();
