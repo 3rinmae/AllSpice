@@ -4,16 +4,13 @@
       <div class="col-4 m-0 pe-3 recipe-img d-flex justify-content-end">
         <FavoriteUnfavoriteRecipe :id="activeRecipe.id" />
       </div>
-      <div class="col-8 py-4 px-2">
+      <div class="col-8 pt-4 px-2">
         <section class="row">
-          <div class="col-12">
-            <span class="fs-4 m-0 p-3 text-secondary">
+          <div class="col-12 pb-3">
+            <span class="fs-4 m-0 p-4 text-secondary">
               {{ activeRecipe.title }}
             </span>
             <span class="text-gb p-1">{{ activeRecipe.category }}</span>
-            <p class="px-3 m-0">
-              subtitle?
-            </p>
           </div>
         </section>
         <section class="row justify-content-evenly align-content-between">
@@ -27,7 +24,7 @@
                 <textarea v-else v-model="editableInstructions.instructions" name="" id="" rows="10"
                   class="form-control">{{ activeRecipe.instructions }}</textarea>
               </div>
-              <div class="">
+              <div v-if="activeRecipe.creatorId == accountId" class="">
                 <button v-if="editable.edit == false" @click="editable.edit = !editable.edit" class="btn "
                   title="edit instructions" role="button" type="button">
                   <i class="mdi mdi-pencil"></i>
@@ -49,7 +46,7 @@
                     ingredient.name }}</li>
                 </span>
               </div>
-              <div class="text-end">
+              <div v-if="activeRecipe.creatorId == accountId" class="text-end">
                 <button class="btn text-end" title="edit instructions" role="button" type="button">
                   <i class="mdi mdi-pencil"></i>
                 </button>
@@ -58,8 +55,12 @@
           </div>
         </section>
         <section class="row text-end">
-          <div class="col-12">
-            Published By: {{ activeRecipe.creator.name }}
+          <div class="col-12 d-flex align-items-center justify-content-between">
+            <button @click="destroyRecipe()" class="btn fs-4" role="button" title="delete recipe"> <i
+                class="mdi mdi-delete-outline"></i></button>
+            <span class="">
+              Published By: {{ activeRecipe.creator.name }}
+            </span>
           </div>
         </section>
       </div>
@@ -77,6 +78,7 @@ import Pop from "../utils/Pop";
 import { ingredientsService } from "../services/IngredientsService";
 import FavoriteUnfavoriteRecipe from "./FavoriteUnfavoriteRecipe.vue";
 import { recipesService } from "../services/RecipesService";
+import { Modal } from "bootstrap";
 export default {
   setup() {
     const editable = ref({ edit: false })
@@ -105,12 +107,23 @@ export default {
       recipeCoverImg: computed(() => `url(${AppState.activeRecipe?.img})`),
       ingredients: computed(() => AppState.ingredients),
       myFavorites: computed(() => AppState.myFavorites),
+      accountId: computed(() => AppState.account.id),
 
       async saveEdit() {
         try {
           const updatedInstructions = editableInstructions.value;
           logger.log('editing instructions', updatedInstructions)
           await recipesService.saveEdit(updatedInstructions);
+        } catch (error) {
+          logger.error(error);
+          Pop.error(error);
+        }
+      },
+
+      async destroyRecipe() {
+        try {
+          await recipesService.destroyRecipe()
+          Modal.getOrCreateInstance('#recipeDetailsModal').hide()
         } catch (error) {
           logger.error(error);
           Pop.error(error);
