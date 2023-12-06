@@ -2,8 +2,8 @@
   <div class="container-fluid">
     <section class="row justify-content-center">
       <div class="col-4 d-flex py-3 px-4 filter-card justify-content-between">
-        <p class="m-0">Home</p>
-        <p class="m-0">My Recipes</p>
+        <p @click="getRecipes()" class="m-0" role="button" type="button">Home</p>
+        <p @click="showMyRecipes()" class="m-0" role="button" type="button">My Recipes</p>
         <p @click="showMyFavorites()" class="m-0" role="button" type="button">Favorites</p>
       </div>
     </section>
@@ -47,9 +47,18 @@ export default {
     return {
       recipes: computed(() => AppState.recipes),
       account: computed(() => AppState.account),
+      getRecipes,
       async showMyFavorites() {
         try {
           await recipesService.showMyFavorites()
+        } catch (error) {
+          logger.error(error);
+          Pop.error(error);
+        }
+      },
+      async showMyRecipes() {
+        try {
+          await recipesService.showMyRecipes()
         } catch (error) {
           logger.error(error);
           Pop.error(error);

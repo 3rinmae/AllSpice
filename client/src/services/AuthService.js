@@ -8,6 +8,7 @@ import { socketService } from './SocketService'
 import { logger } from "../utils/Logger"
 import Pop from "../utils/Pop"
 import { favoritesService } from "./FavoritesService"
+import { recipesService } from "./RecipesService"
 
 export const AuthService = initialize({
   domain,
@@ -31,6 +32,7 @@ AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async function () {
   socketService.authenticate(AuthService.bearer)
   // NOTE if there is something you want to do once the user is authenticated, place that here
   await favoritesService.getMyFavorites()
+  await recipesService.getMyRecipes()
 })
 
 async function refreshAuthToken(config) {

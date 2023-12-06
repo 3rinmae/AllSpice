@@ -14,6 +14,15 @@ class RecipesService {
     AppState.recipes = AppState.myFavorites.map((recipe) => new Recipe(recipe))
   }
 
+  async getMyRecipes() {
+    AppState.myRecipes = AppState.recipes.filter((recipe) => recipe.creatorId == AppState.account.id)
+    logger.log('getting my recipes', AppState.myRecipes)
+  }
+
+  async showMyRecipes() {
+    AppState.recipes = AppState.myRecipes.map((recipe) => new Recipe(recipe))
+  }
+
   async saveEdit(updatedInstructions) {
     const recipeId = updatedInstructions.id
     const res = await api.put(`api/recipes/${recipeId}`, updatedInstructions)
