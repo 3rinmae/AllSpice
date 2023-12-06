@@ -12,9 +12,9 @@ class RecipesService {
 
   async saveEdit(updatedInstructions) {
     const recipeId = updatedInstructions.id
-    const res = await api.put(`api/recipes/${recipeId}`, { updatedInstructions })
+    const res = await api.put(`api/recipes/${recipeId}`, updatedInstructions)
     logger.log("recipe service update", res.data)
-    // AppState.activeRecipe = new Recipe(res.data)
+    AppState.activeRecipe = new Recipe(res.data)
   }
 }
 
