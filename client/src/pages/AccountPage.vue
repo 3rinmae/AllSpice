@@ -14,8 +14,6 @@
         <label for="picture" class="form-label">Picture</label>
         <input v-model="editable.picture" type="url" class="form-control" id="picture" />
       </div>
-
-
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>

@@ -22,9 +22,18 @@
   <div class="modal fade" id="recipeDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
-
         <div class="modal-body p-0">
           <RecipeDetailCard />
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="createNewRecipeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-body p-0">
+          <CreateNewRecipeModal />
         </div>
 
       </div>
@@ -37,6 +46,7 @@ import { computed } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
 import RecipeDetailCard from "./components/RecipeDetailCard.vue"
+import CreateNewRecipeModal from "./components/CreateNewRecipeModal.vue"
 
 export default {
   setup() {
@@ -45,7 +55,7 @@ export default {
       activeRecipe: computed(() => AppState.activeRecipe)
     }
   },
-  components: { Navbar, RecipeDetailCard }
+  components: { Navbar, RecipeDetailCard, CreateNewRecipeModal }
 }
 </script>
 <style lang="scss">

@@ -14,8 +14,8 @@
             <span class="navbar-toggler-icon"></span>
           </button> -->
           <div class="d-flex align-items-center justify-content-between col-12 order-1">
-            <button class=" btn btn-outline-white " type="button" title="add recipe"><i
-                class="mdi mdi-folder-plus-outline"></i></button>
+            <button class=" btn btn-outline-white " type="button" title="add recipe" data-bs-toggle="modal"
+              data-bs-target="#createNewRecipeModal"><i class="mdi mdi-folder-plus-outline"></i></button>
             <div class="d-flex align-items-center">
               <div class=" d-flex">
                 <input type="text" class="form-control" placeholder="Search" aria-label="Search"
@@ -31,8 +31,6 @@
                   </li>
                 </ul> -->
                 <!-- LOGIN COMPONENT HERE -->
-
-
                 <Login />
               </div>
             </div>

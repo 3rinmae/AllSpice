@@ -36,6 +36,12 @@ class RecipesService {
     logger.log('recipe deleted', res.data)
     this.getRecipes()
   }
+
+  async createNewRecipe(recipeData) {
+    const res = await api.post('api/recipes', recipeData)
+    logger.log('create recipe', res.data)
+    AppState.recipes.unshift(new Recipe(res.data))
+  }
 }
 
 export const recipesService = new RecipesService()
